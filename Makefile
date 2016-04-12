@@ -1,5 +1,6 @@
 #programs,flags,etc.
-TARGET	=	server client 
+INCLUDE	=	-I include
+TARGET	=	bin/server bin/client 
 
 #ALL Phony Targets
 .PHONY:	everything	clean	all
@@ -10,8 +11,12 @@ clean:
 	rm -f $(TARGET)
 all:	clean everything
 
-server:	src/tcp_server.c 
-	gcc $(INCLUDE) -g -o server src/tcp_server.c 
+bin/server:	src/server/tcp_server.c	\
+			src/server/services.c include/services.h	\
+			src/server/preservices.c include/preservices.h	\
+			src/server/tools.c include/tools.h
+	gcc $(INCLUDE) -g -o bin/server src/server/tcp_server.c src/server/services.c src/server/preservices.c src/server/tools.c
 
-client:	src/tcp_client.c  		
-	gcc $(INCLUDE) -g -o client src/tcp_client.c
+bin/client:	src/client/tcp_client.c  \
+			src/client/requestservices.c include/requestservices.h 			
+	gcc $(INCLUDE) -g -o bin/client src/client/tcp_client.c src/client/requestservices.c
