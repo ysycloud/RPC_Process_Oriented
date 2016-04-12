@@ -10,6 +10,8 @@ everything:	$(TARGET)
 clean:	
 	rm -f $(TARGET)
 all:	clean everything
+install: 
+	install bin/* /usr/bin/
 
 bin/server:	src/server/tcp_server.c	\
 			src/server/services.c include/services.h	\
